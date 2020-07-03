@@ -31,15 +31,14 @@ defimpl Prismic.Fragment, for: Prismic.Fragment.StructuredText do
 
   defp build_html(groups, link_resolver, html_serializer) do
     groups
-    |> Enum.flat_map(& &1.blocks)
-    |> Enum.map_join("\n\n", &Block.as_html(&1, link_resolver, html_serializer))
+    |> Enum.map_join("\n\n", &BlockGroup.as_html(&1, link_resolver, html_serializer))
   end
 
   defp build_groups(blocks) do
     blocks
-    |> Enum.group_by(&group_kind/1)
-    |> Enum.map(fn {kind, blocks} ->
-      %BlockGroup{kind: kind, blocks: blocks}
+    |> Enum.chunk_by(&group_kind/1)
+    |> Enum.map(fn [first_block | _] = blocks ->
+      %BlockGroup{kind: group_kind(first_block), blocks: blocks}
     end)
   end
 

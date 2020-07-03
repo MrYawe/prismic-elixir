@@ -7,5 +7,9 @@ defmodule Block.Text.Paragraph do
 end
 
 defimpl Block, for: Block.Text.Paragraph do
-  def as_html(_, _link_resolver, _html_serializer), do: ""
+  alias Block.Text.Paragraph
+  alias Prismic.Fragment.StructuredText.Span
+
+  def as_html(%Paragraph{text: text}, link_resolver, _html_serializer),
+    do: ["<p>", text, "</p>"]
 end

@@ -12,5 +12,8 @@ defmodule Block.Text.ListItem do
 end
 
 defimpl Block, for: Block.Text.ListItem do
-  def as_html(_, _link_resolver, _html_serializer), do: ""
+  alias Block.Text.ListItem
+
+  def as_html(%ListItem{text: text}, _link_resolver, _html_serializer),
+    do: ["<li>", text, "</li>"]
 end
