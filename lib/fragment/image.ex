@@ -9,5 +9,15 @@ end
 
 defimpl Prismic.Fragment, for: Prismic.Fragment.Image do
   alias Prismic.Fragment.Image
-  def as_html(%Image{main: main}, _, _), do: ["<img src=\"", main.url, "\" />"]
+
+  def as_html(%Image{main: main}, _, _),
+    do: [
+      "<img src=\"",
+      main.url,
+      "\" width=\"",
+      to_string(main.width),
+      "\" height=\"",
+      to_string(main.height),
+      "\" />"
+    ]
 end
